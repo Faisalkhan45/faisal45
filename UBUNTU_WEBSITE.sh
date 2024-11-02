@@ -1,22 +1,23 @@
 #!/bin/bash
+set -x  # Enable debugging
 
-# Update package lists
-sudo apt update
-
-# Install necessary packages
-sudo apt install unzip apache2 wget -y
+# Update and install required packages
+apt update
+apt install -y unzip apache2 wget
 
 # Start and enable Apache
-sudo systemctl start apache2
-sudo systemctl enable apache2
+systemctl start apache2
+systemctl enable apache2
 
-# Download and unzip the website template
+# Download the zip file
 wget https://www.free-css.com/assets/files/free-css-templates/download/page296/neogym.zip
-sudo unzip -o neogym.zip -d /tmp  # Unzip to a temporary directory
 
-# Copy the files to the web directory
-sudo cp -r /tmp/neogym-html/* /var/www/html
+# Unzip the downloaded file
+unzip -o neogym.zip
 
-# Restart Apache to apply changes
-sudo systemctl restart apache2
+# Copy files to the web directory
+cp -r neogym-html/* /var/www/html
+
+# Restart Apache
+systemctl restart apache2
 
